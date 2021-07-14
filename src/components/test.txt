@@ -1,0 +1,137 @@
+ <Fragment>
+            <Grid container direction="column" alignItems="stretch" style={{ padding: "10px", height: "100%" }}>
+                <Grid item style={{ height: "auto", width: "" }}>
+                    <Paper variant="outlined" style={{ borderRadius: "7.5px" }}>
+                        <Grid container direction="row" alignItems="center">
+                            <Grid item xs={12} sm={12} md={12} lg={3} xl={3} style={{ borderRight: "solid 2px #e7e7e7", padding: "15px" }}>
+                                <Typography style={{ fontSize: "0.825rem", fontFamily: "Work Sans" }}>
+                                    Mounted Database
+                                </Typography>
+                                <Typography style={{ fontSize: "1rem", fontFamily: "Work Sans", color: colors.red.accentColor, fontWeight: "500" }}>
+                                    <FontAwesomeIcon icon={faDatabase} style={{ marginRight: "5px", color: colors.red.accentColor }} />
+                                    {database ? database : "None"}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} lg={5} xl={5} style={{ borderRight: "solid 2px #e7e7e7", padding: "15px" }}>
+                                <Grid container direction="row" justify="space-between" alignItems="flex-start">
+                                    <Grid item>
+                                        <Typography style={{ fontSize: "0.825rem", fontFamily: "Work Sans" }}>
+                                            Mounted Collection
+                                        </Typography>
+                                        <Typography style={{ fontSize: "1rem", fontFamily: "Work Sans" }}>
+                                            <FontAwesomeIcon icon={faCube} style={{ fontSize: "1rem", marginRight: "5px", color: colors.red.accentColor }} />
+                                            {database ? database : "None"}
+                                            <FontAwesomeIcon icon={faChevronRight} style={{ margin: "0px 5px", color: colors.red.accentColor }} />
+                                            <span style={{ color: colors.red.accentColor, fontWeight: "500" }}>{collection ? collection : "None"}</span>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography style={{ fontSize: "0.875rem", fontFamily: "Work Sans" }}>
+                                            Data Size: {data ? Object.keys(data.data).length : 0}
+                                        </Typography>
+                                        <Typography style={{ fontSize: "0.875rem", fontFamily: "Work Sans" }}>
+                                            Field Count: {data ? Object.keys(data.schema).length : 0}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} lg={4} xl={4} style={{ padding: "15px" }}>
+                                <ButtonM onClick={() => { setOpenSchemaDialog(!openSchemaDialog) }} size="small" variant="contained" style={{ marginTop: "5px", color: colors.red.accentColor, backgroundColor: colors.red.backgroundColor, fontFamily: "Work Sans" }}>
+                                    View Schema
+                                </ButtonM>
+                            </Grid >
+                        </Grid >
+                    </Paper >
+                </Grid >
+                <Grid item style={{ height: "100%" }}>
+                    <Paper variant="outlined" style={{ borderRadius: "7.5px", height: "100%" }}>
+                        <Grid container direction="row" justify="flex-start" alignItems="flex-start" style={{ height: "100%", boxSizing: "border-box" }}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ height: "100%" }}>
+                                <Grid container direction="row" justify="space-between" alignItems="stretch" style={{ height: "100%" }} >
+                                    <Grid item xs={12} sm={12} md={12} lg={3} xl={3} style={{ borderRight: "solid 2px #e7e7e7", height: "100%", padding: "10px" }}>
+                                        dcd
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={12} lg={5} xl={5} style={{ borderRight: "solid 2px #e7e7e7", height: "100%" }}>
+                                        sdc
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "100%" }}>
+                                        sdc
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Grid>
+            </Grid>
+            <SideSheet isShown={openSchemaDialog}
+                position={Position.Right}
+                onCloseComplete={() => { setOpenSchemaDialog(!openSchemaDialog) }}
+            >
+                <div style={{ padding: "25px" }}>
+                    <Grid container direction="column" justify="center" alignItems="stretch" spacing={2}>
+                        <Grid item>
+                            <Typography style={{ fontSize: "1rem", fontFamily: "Work Sans", color: colors.red.accentColor, fontWeight: "500" }}>
+                                <FontAwesomeIcon icon={faProjectDiagram} style={{ fontSize: ".875rem", marginRight: "5px" }} />
+                                Collection Schema
+                            </Typography>
+                        </Grid>
+                        <Grid item >
+                            <Typography style={{ fontSize: "0.9rem", fontFamily: "Work Sans" }}>
+                                <FontAwesomeIcon icon={faCube} style={{ fontSize: "0.875rem", marginRight: "5px", color: colors.red.accentColor }} />
+                                Collection: <span style={{ color: colors.red.accentColor, fontWeight: "500" }}>{collection}</span>
+                            </Typography>
+                            <Typography style={{ fontSize: "0.9rem", fontFamily: "Work Sans" }}>
+                                <FontAwesomeIcon icon={faTable} style={{ fontSize: "0.875rem", marginRight: "5px", color: colors.red.accentColor }} />
+                                Field Count: <span style={{ color: colors.red.accentColor, fontWeight: "500" }}>{data ? Object.keys(data.schema).length : 0}</span>
+                            </Typography>
+                        </Grid>
+                        <Grid item style={{ width: "100%" }}>
+                            <TableE style={{ width: "100%" }}>
+                                <TableE.Head>
+                                    <TableE.TextHeaderCell>Name</TableE.TextHeaderCell>
+                                    <TableE.TextHeaderCell>Description</TableE.TextHeaderCell>
+                                </TableE.Head>
+                                <TableE.Body>
+                                    {
+                                        data ? Object.keys(data.schema).map((scheme) => (
+                                            <TableE.Row isSelectable onSelect={() => setDisplayableScheme({ key: scheme, value: data.schema[scheme] })}>
+                                                <TableE.TextCell>
+                                                    {scheme ? scheme : undefined}
+                                                    {
+                                                        scheme === "_id" ? <FontAwesomeIcon icon={faKey} style={{ fontSize: "0.875rem", marginLeft: "5px", color: "#ffb100" }} /> : undefined
+                                                    }
+                                                </TableE.TextCell>
+                                                <TableE.TextCell>{data.schema[scheme]}</TableE.TextCell>
+                                            </TableE.Row>
+                                        )) : undefined
+                                    }
+                                </TableE.Body>
+                            </TableE>
+                        </Grid>
+                        {
+                            displayableScheme ?
+                                <Grid item>
+                                    <div style={{ borderRadius: "5px", border: "solid 1px #e7e7e7", padding: "10px" }}>
+                                        <Typography style={{ fontSize: "1rem", fontFamily: "Work Sans", color: colors.red.accentColor, fontWeight: "500" }}>
+                                            Schema Spotlight
+                                        </Typography>
+                                        <Typography style={{ margin: "10px 0", fontSize: "0.875rem", fontWeight: "500", fontFamily: "Work Sans" }}>
+                                            <span style={{ marginRight: "5px", fontWeight: "600", fontStyle: "italic", backgroundColor: colors.red.backgroundColor, padding: "7px 7px", borderRadius: "4px", color: colors.red.accentColor }}>
+                                                {displayableScheme.key}
+                                            </span>
+                                            - {displayableScheme.value}
+                                        </Typography>
+                                        {
+                                            displayableScheme.key === "_id" ?
+                                                <Typography style={{ color: "black", fontFamily: 'Work Sans', fontSize: "0.675rem" }} >
+                                                    <FontAwesomeIcon icon={faInfoCircle} style={{ color: "#ffb100" }} /> ID is an unique identifier field for each data. ID helps isolate each data from the others in the collection.
+                                                </Typography> : undefined
+                                        }
+                                    </div>
+                                </Grid>
+                                : undefined
+                        }
+                    </Grid>
+                </div >
+            </SideSheet >
+        </Fragment>
