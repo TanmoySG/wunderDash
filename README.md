@@ -4,9 +4,7 @@
 
 **wunderDB** is a JSON-based web-store to store an manage your data remotely and securely.
 
-***wunderDash*** provides a GUI to manage your clusters on wunderDB. 
-
-Built on ReactJS, wunderDash is fast and efficient with beautiful a UI.
+**wunderDash** provides a GUI to manage your clusters on wunderDB. Built on ReactJS, wunderDash is fast and efficient with beautiful a UI.
 
 <!-- Try out the Release 0.1 Beta by [Creating A cluster](https://wdb.tanmoysg.com/) as accessing wunderDash at [wdb.tanmoysg.com/wdash](https://wdb.tanmoysg.com/wdash) -->
 
