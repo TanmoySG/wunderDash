@@ -6,13 +6,19 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner, toaster } from 'evergreen-ui';
-import { InputLabel, FormControl, Hidden, Button, Grid, Typography, OutlinedInput, InputAdornment } from "@material-ui/core";
-import { faArrowRight, faAsterisk, faAt, faCheckCircle, faChevronCircleRight, faExclamationCircle, faKey, faLock, faSpinner, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
+import { FormControl, Hidden, Button, Grid, Typography, OutlinedInput, InputAdornment } from "@material-ui/core";
+import { faArrowRight, faAsterisk, faAt } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from './components/dash.component';
 
 function App() {
 
-	var endpoint = "https://wdb.tanmoysg.com/login";
+	const config = require("./wdb.json")
+
+	const WDB_URL = config.REACT_APP_WDB_URL
+
+	console.log(WDB_URL)
+
+	var endpoint = `${WDB_URL}/login`;
 
 	let theme = createMuiTheme({
 		palette: {
