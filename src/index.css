@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* For Mobile */
+@media only screen and (max-width: 960px) {
+  .papyrus {
+    height: "100%"
+  }
+  .compartments {
+    border-bottom: "solid 2px #e7e7e7"
+  }
+  .toon{
+
+  }
+}
+
+/* Large Screen */
+@media only screen and (min-width: 961px) {
+  .papyrus {
+    height: "100vh"
+  }
+  .compartments {
+    border-right: "solid 2px #e7e7e7"
+  }
+}
