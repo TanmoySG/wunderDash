@@ -5,6 +5,7 @@ import useReactFontLoader from 'react-font-loader'
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Spinner, toaster } from 'evergreen-ui';
 import { InputLabel, FormControl, Hidden, Button, Grid, Typography, OutlinedInput, InputAdornment } from "@material-ui/core";
 import { faArrowRight, faAsterisk, faAt, faCheckCircle, faChevronCircleRight, faExclamationCircle, faKey, faLock, faSpinner, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from './components/dash.component';
@@ -93,7 +94,9 @@ function App() {
 			return response.json()
 		}).then(json => {
 			if (json.status_code !== '1') {
-				setError(json.response)
+				toaster.danger(json.response);
+				setError(json.response);
+				setProcess('Processed');
 			} else {
 				setError();
 				setProcess('Processed');
@@ -170,6 +173,9 @@ function App() {
 										<FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: "5px" }} />
 									</Button>
 								</Grid>
+								{
+									process === 'Ready' || process === 'Processed' ? undefined : <Grid item style={{ marginTop: "5px" }}><Spinner /></Grid>
+								}
 							</Grid>
 						</Grid>
 						<Hidden mdDown>
