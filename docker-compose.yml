@@ -10,3 +10,5 @@ services:
       NODE_ENV: production
     ports:
       - 3000:3000
+    volumes:
+      - ./secrets/wdb.json:/usr/src/app/src/wdb.json

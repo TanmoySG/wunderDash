@@ -12,7 +12,11 @@ import { MenuBookSharp } from '@material-ui/icons';
 
 function Console(props) {
 
-    var endpoint = "https://wdb.tanmoysg.com/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
+    const config = require("../wdb.json")
+
+    const WDB_URL = config.REACT_APP_WDB_URL
+
+    var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
     const [process, setProcess] = useState('Ready');
 
