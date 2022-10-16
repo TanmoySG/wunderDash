@@ -6,9 +6,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args: 
+        WDB_URL: "http://localhost:5002"
     environment:
       NODE_ENV: production
     ports:
       - 3000:3000
-    volumes:
-      - ./secrets/wdb.json:/usr/src/app/src/wdb.json
