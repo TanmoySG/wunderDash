@@ -12,7 +12,7 @@ To run the Client, locally, on your device, we recommend using the [Docker Image
 
 Start the WunderDB server locally or use an hosted instance like [wdb.tanmoysg.com](https://wdb.tanmoysg.com/index.html). To run WDB Locally refer to it's [official documentation](https://github.com/TanmoySG/wunderDB#readme).
 
-Once WDB is up and running, get the URL and replace it in the Docker Compose File `build-args` as
+Once WDB is up and running, get the URL and replace it in the [Docker Compose](docker-compose.yml) File `build-args` as
 ```yml
 build:
     args: 
