@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Pane, Button as ButtonE, toaster, Table as TableE, Popover, Dialog, TextInputField, Spinner, SelectField, Tooltip } from 'evergreen-ui';
+import { faBinoculars, faChevronRight, faClone, faCube, faCubes, faExclamationTriangle, faFileExport, faInfoCircle, faKey, faLayerGroup, faLightbulb, faPlus, faTable, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { List, ListItem, ListItemText, Divider, Typography, Grid, TextField, IconButton, Paper, Stepper, StepLabel, Step, ButtonGroup, Button as ButtonM } from "@material-ui/core";
-import { faCube, faCubes, faInfoCircle, faKey, faLayerGroup, faChevronRight, faTable, faLightbulb, faExclamationTriangle, faTrash, faClone, faPeopleCarry, faFileExport, faPlus, faCog, faBinoculars } from '@fortawesome/free-solid-svg-icons';
+import { Button as ButtonM, ButtonGroup, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, Step, StepLabel, Stepper, TextField, Typography } from "@material-ui/core";
 import AddToPhotosRoundedIcon from '@material-ui/icons/AddToPhotos';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IndeterminateCheckIcon from '@material-ui/icons/IndeterminateCheckBox';
 import EditIcon from '@material-ui/icons/Edit';
+import IndeterminateCheckIcon from '@material-ui/icons/IndeterminateCheckBox';
+import { Button as ButtonE, Dialog, Pane, Popover, SelectField, Spinner, Table as TableE, TextInputField, toaster, Tooltip } from 'evergreen-ui';
+import React, { useEffect, useState } from 'react';
+import 'status-indicator/styles.css';
 import spotmiss from '../assets/Focus-rafiki.svg';
 import datamiss from '../assets/Spreadsheets-pana.svg';
-import 'status-indicator/styles.css';
 
 function DockLargeScreen(props) {
 
-    const config = require("../wdb.json")
+    const config = require("../assets/wdb.secrets.json")
 
-    const WDB_URL = config.REACT_APP_WDB_URL
+    const WDB_URL = config.WDB_URL
 
     var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
-    const [process, setProcess] = useState('Ready');
+    const [wdbProcess, setProcess] = useState('Ready');
 
     const [databases, setDatabases] = useState();
     const [database, setDatabase] = useState();
@@ -109,9 +109,9 @@ function DockLargeScreen(props) {
             if (json.status_code === '0') {
                 setError(json.response); setProcess("Error"); toaster.danger(json.response);
             } else {
-                var processedData = json.data;
+                var wdbProcessedData = json.data;
                 var dataSchema = json.schema;
-                setData({ data: processedData, schema: dataSchema });
+                setData({ data: wdbProcessedData, schema: dataSchema });
                 setError();
                 setProcess('Fetched');
             };
@@ -130,8 +130,8 @@ function DockLargeScreen(props) {
     }
 
     /*
-    if (process !== props.process) {
-        setProcess(props.process);
+    if (wdbProcess !== props.wdbProcess) {
+        setProcess(props.wdbProcess);
     }
 */
 
@@ -524,16 +524,16 @@ function DockLargeScreen(props) {
                                 <Grid container direction="row" alignItems="center">
                                     <span>
                                         {
-                                            process ?
-                                                process === 'Ready' ? <status-indicator pulse></status-indicator>
-                                                    : process === 'Fetching' ? <Spinner size={16} />
-                                                        : process === 'Fetched' ? <status-indicator positive pulse></status-indicator>
-                                                            : process === 'Error' ? <status-indicator negative pulse></status-indicator>
+                                            wdbProcess ?
+                                                wdbProcess === 'Ready' ? <status-indicator pulse></status-indicator>
+                                                    : wdbProcess === 'Fetching' ? <Spinner size={16} />
+                                                        : wdbProcess === 'Fetched' ? <status-indicator positive pulse></status-indicator>
+                                                            : wdbProcess === 'Error' ? <status-indicator negative pulse></status-indicator>
                                                                 : <status-indicator pulse></status-indicator>
                                                 : undefined
                                         }
                                     </span>
-                                    <span style={{ marginLeft: "5px", fontFamily: 'Work Sans' }}>{process ? process : "Whats up, bruh?"}</span>
+                                    <span style={{ marginLeft: "5px", fontFamily: 'Work Sans' }}>{wdbProcess ? wdbProcess : "Whats up, bruh?"}</span>
                                 </Grid>
                             </ButtonE>
                         </Tooltip>
@@ -610,13 +610,13 @@ function DockLargeScreen(props) {
                                                                                     <ButtonGroup style={{ boxShadow: 'none' }} orientation="vertical">
                                                                                         <ButtonM
                                                                                             style={{ backgroundColor: colors.bwg.accentColor }}
-                                                                                            onClick={(e) => { setCollectionFieldCount(collectionFieldCount + 1) }}
+                                                                                            onClick={() => { setCollectionFieldCount(collectionFieldCount + 1) }}
                                                                                         >
                                                                                             +
                                                                                         </ButtonM>
                                                                                         <ButtonM
                                                                                             style={{ backgroundColor: colors.bwg.accentColor }}
-                                                                                            onClick={(e) => { setCollectionFieldCount(collectionFieldCount - 1) }}
+                                                                                            onClick={() => { setCollectionFieldCount(collectionFieldCount - 1) }}
                                                                                         >
                                                                                             -
                                                                                         </ButtonM>
@@ -645,7 +645,7 @@ function DockLargeScreen(props) {
                                                                             </Typography>
                                                                         </div>
                                                                         : stepCollectionCreate === 2 ?
-                                                                            Object.keys(collectionSchema).map((fieldName, i) => {
+                                                                            Object.keys(collectionSchema).map((fieldName) => {
                                                                                 return (
                                                                                     <TextInputField
                                                                                         key={"desc-textbox-" + fieldName}
@@ -726,7 +726,7 @@ function DockLargeScreen(props) {
                                             <List>
                                                 {
                                                     collections ?
-                                                        Object.keys(collections).map((collect, i) => {
+                                                        Object.keys(collections).map((collect) => {
                                                             return (
                                                                 <>
                                                                     <ListItem button onClick={() => handleSelectCollection(collect)} style={{ backgroundColor: collections[collect].collection_name === collection ? colors.blue.foregroundColor : "transparent" }} >
@@ -872,7 +872,7 @@ function DockLargeScreen(props) {
                                                         </Popover>
                                                         {*/}
                                                         <Popover
-                                                            content={({ close }) => (
+                                                            content={() => (
                                                                 <Pane
                                                                     padding={20}
                                                                     display="flex"
@@ -901,7 +901,7 @@ function DockLargeScreen(props) {
                                                             </Tooltip>
                                                         </Popover>
                                                         <Popover
-                                                            content={({ close }) => (
+                                                            content={() => (
                                                                 <Pane
                                                                     padding={20}
                                                                     display="flex"
@@ -983,7 +983,7 @@ function DockLargeScreen(props) {
                                                             </Tooltip>
                                                         </Popover>
                                                         <Popover
-                                                            content={({ close }) => (
+                                                            content={() => (
                                                                 <Pane
                                                                     padding={20}
                                                                     display="flex"
@@ -1070,7 +1070,7 @@ function DockLargeScreen(props) {
                                         </Grid>
                                         <Grid item style={{ marginTop: "10px" }}>
                                             <Popover
-                                                content={({ close }) => (
+                                                content={() => (
                                                     <Pane
                                                         padding={20}
                                                         display="flex"
@@ -1132,7 +1132,7 @@ function DockLargeScreen(props) {
                                                 </Tooltip>
                                             </Popover>
                                             <Popover
-                                                content={({ close }) => (
+                                                content={() => (
                                                     <Pane
                                                         padding={20}
                                                         display="flex"
@@ -1240,7 +1240,7 @@ function DockLargeScreen(props) {
                                                         >
                                                             {
                                                                 data ?
-                                                                    Object.keys(data.schema).map((fieldName, i) => {
+                                                                    Object.keys(data.schema).map((fieldName) => {
                                                                         if (fieldName !== "_id") {
                                                                             return (
                                                                                 <TextInputField
@@ -1282,13 +1282,13 @@ function DockLargeScreen(props) {
                                                 <List>
                                                     {
 
-                                                        Object.keys(data.data).map((uid, i) => {
+                                                        Object.keys(data.data).map((uid) => {
                                                             return (
                                                                 <>
                                                                     <ListItem button onClick={() => { bringToSpotlight(uid) }} style={{ margin: "2.5px 0" }} >
                                                                         <ListItemText
                                                                             primary={
-                                                                                Object.keys(data.data[uid]).map((datapacks, j) => {
+                                                                                Object.keys(data.data[uid]).map((datapacks) => {
                                                                                     return (
                                                                                         <>
                                                                                             <Typography style={{ lineHeight: "1.75", color: colors.bwg.backgroundColor, fontFamily: "Work Sans", fontSize: "0.825rem", fontWeight: "400" }}>
@@ -1354,7 +1354,7 @@ function DockLargeScreen(props) {
                                                                         </Grid>
                                                                         <Grid item >
                                                                             <Popover
-                                                                                content={({ close }) => (
+                                                                                content={() => (
                                                                                     <Pane
                                                                                         padding={20}
                                                                                         display="flex"
@@ -1393,7 +1393,7 @@ function DockLargeScreen(props) {
                                             spotlight ?
                                                 <div style={{ width: "100%", borderRadius: "5px", overflow: "auto" }}>
                                                     {
-                                                        Object.keys(spotlight).map((key, i) => {
+                                                        Object.keys(spotlight).map((key) => {
                                                             return (
                                                                 <div style={{ marginBottom: "7.5px" }}>
                                                                     <Typography style={{ marginBottom: "2.5px", fontFamily: 'Work Sans', fontSize: "0.875rem", width: "100%" }}>

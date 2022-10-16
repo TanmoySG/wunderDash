@@ -1,24 +1,19 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import logo from '../assets/wdash.png';
-import { Avatar, Position, Menu as MenuE, Button as ButtonE, Table as TableE, SideSheet } from 'evergreen-ui';
+import React, { useState, useEffect } from 'react';
+import { Position, Table as TableE, SideSheet } from 'evergreen-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TreeView, TreeItem } from '@material-ui/lab';
-import { List, ListItem, ListItemText, Divider, Typography, Grid, Drawer, Fade, Paper, MenuItem, AccordionDetails, Menu as MenuM, Button as ButtonM } from "@material-ui/core";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { faCube, faChevronCircleDown, faChevronCircleRight, faCopy, faCubes, faDatabase, faExclamationCircle, faInfoCircle, faKey, faLayerGroup, faLock, faSpinner, faUserAstronaut, faChevronRight, faProjectDiagram, faTimesCircle, faTable, faLightbulb, faStream } from '@fortawesome/free-solid-svg-icons';
-import { MenuBookSharp } from '@material-ui/icons';
+import { Typography, Grid, Paper, Button as ButtonM } from "@material-ui/core";
+import { faCube, faDatabase, faInfoCircle, faKey, faChevronRight, faProjectDiagram, faTable, faLightbulb, faStream } from '@fortawesome/free-solid-svg-icons';
 
 
 function Console(props) {
 
-    const config = require("../wdb.json")
+    const config = require("../assets/wdb.secrets.json")
 
-    const WDB_URL = config.REACT_APP_WDB_URL
+    const WDB_URL = config.WDB_URL
 
     var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
-    const [process, setProcess] = useState('Ready');
+    const [wdbProcess, setwdbProcess] = useState('Ready');
 
     const [database, setDatabase] = useState();
     const [collection, setCollection] = useState();
@@ -32,7 +27,7 @@ function Console(props) {
     const colors = props.colors;
 
     const fetchData = () => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -52,11 +47,11 @@ function Console(props) {
             if (json.status_code === '0') {
                 setError(json.response)
             } else {
-                var processedData = json.data;
+                var wdbProcessedData = json.data;
                 var dataSchema = json.schema;
-                setData({ data: processedData, schema: dataSchema });
+                setData({ data: wdbProcessedData, schema: dataSchema });
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
             };
         })
     }
@@ -65,7 +60,7 @@ function Console(props) {
         console.log("Updated");
         setDatabase(props.database);
         setCollection(props.collection);
-        setProcess('Ready');
+        setwdbProcess('Ready');
         setDisplayableScheme();
         fetchData();
     }
@@ -73,7 +68,7 @@ function Console(props) {
     useEffect(() => {
         setDatabase(props.database);
         setCollection(props.collection);
-        setProcess('Ready');
+        setwdbProcess('Ready');
         fetchData();
         /*return () => {
             cleanup
