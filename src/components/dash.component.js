@@ -13,9 +13,9 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 function Dashboard(props) {
 
-    const config = require("../wdb.json")
+    const config = require("../assets/wdb.secrets.json")
 
-    const WDB_URL = config.REACT_APP_WDB_URL
+    const WDB_URL = config.WDB_URL
 
     var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
@@ -28,7 +28,7 @@ function Dashboard(props) {
 
     const colors = props.colors;
 
-    const [process, setProcess] = useState('Ready');
+    const [wdbProcess, setwdbProcess] = useState('Ready');
 
     const [databases, setDatabases] = useState();
     const [databaseList, setDatabaseList] = useState();
@@ -54,7 +54,7 @@ function Dashboard(props) {
 
 
     const fetchDatabases = () => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -84,14 +84,14 @@ function Dashboard(props) {
                 });
                 setDatabaseList(tempArr);
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
             };
         })
     }
 
 
     useEffect(() => {
-        setProcess('Ready');
+        setwdbProcess('Ready');
         fetchDatabases();
         /*
         return () => {
@@ -109,7 +109,7 @@ function Dashboard(props) {
     }
 
     const handleCreateNewDatabase = (e) => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -131,14 +131,14 @@ function Dashboard(props) {
                 toaster.success(json.response)
                 fetchDatabases();
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
                 setOpenNewDatabaseDialog(false);
             };
         })
     }
 
     const handleDeleteDatabase = (srcDb, migratePref, destDb, aifc) => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -163,7 +163,7 @@ function Dashboard(props) {
                 toaster.danger(json.response)
                 fetchDatabases();
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
                 setConfirmationToken();
                 setDeleteDBObject({
                     migrateCollection: "",
@@ -180,7 +180,7 @@ function Dashboard(props) {
     }
 
     const reload = () => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         unmountDB();
         sleep(250).then(() => {
             fetchDatabases();
@@ -342,18 +342,18 @@ function Dashboard(props) {
                                     <Grid container direction="row" alignItems="center">
                                         <span>
                                             {
-                                                process ?
-                                                    process === 'Ready' ? <status-indicator pulse></status-indicator>
-                                                        : process === 'Fetching' ? /*<Spinner size={10} />*/ <status-indicator intermediary ></status-indicator>
-                                                            : process === 'Fetched' ? <status-indicator positive ></status-indicator>
-                                                                : process === 'Error' ? <status-indicator negative pulse></status-indicator>
+                                                wdbProcess ?
+                                                    wdbProcess === 'Ready' ? <status-indicator pulse></status-indicator>
+                                                        : wdbProcess === 'Fetching' ? /*<Spinner size={10} />*/ <status-indicator intermediary ></status-indicator>
+                                                            : wdbProcess === 'Fetched' ? <status-indicator positive ></status-indicator>
+                                                                : wdbProcess === 'Error' ? <status-indicator negative pulse></status-indicator>
                                                                     : <status-indicator pulse></status-indicator>
                                                     : undefined
                                             }
                                         </span>
                                         <span style={{ marginLeft: "3px", fontFamily: 'Work Sans', fontSize: "0.8rem", lineHeight: "1" }}>
                                             {
-                                                process === 'Fetched' ? 'Synced' : "Syncing"
+                                                wdbProcess === 'Fetched' ? 'Synced' : "Syncing"
                                             }
                                         </span>
                                         <FontAwesomeIcon icon={faSync} style={{ marginLeft: "5px", fontSize: "0.65rem", userSelect: "none", color: colors.purple.accentColor }} onClick={reload} />
@@ -413,7 +413,7 @@ function Dashboard(props) {
                                     <div style={{ border: "2px solid #e7e7e7", borderRadius: "5px", height: "35vh", width: "100%", overflow: "auto" }}>
                                         <List>
                                             {
-                                                databases ? Object.keys(databases).map((database, i) => {
+                                                databases ? Object.keys(databases).map((database) => {
                                                     return (
                                                         <>
                                                             <ListItem button onClick={() => handleSelectDB(database)} style={{ backgroundColor: databases[database].database_name === selectedDB ? colors.red.foregroundColor : "transparent" }} >
@@ -459,7 +459,7 @@ function Dashboard(props) {
                                             <Grid container direction="row" justify="flex-start" alignItems="center" style={{ width: "100%" }}>
                                                 <Grid item >
                                                     <Popover
-                                                        content={({ close }) => (
+                                                        content={() => (
                                                             <Pane
                                                                 padding={20}
                                                                 display="flex"
@@ -561,7 +561,7 @@ function Dashboard(props) {
                     {
                         selectedDB ?
                             <div style={{ padding: "20px" }}>
-                                <DockLargeScreen database={selectedDB} databases={databases} colors={colors} process={process} />
+                                <DockLargeScreen database={selectedDB} databases={databases} colors={colors} wdbProcess={wdbProcess} />
                                 {/*}
                                 <Hidden mdUp>
                                     <DockSmallScreen database={selectedDB} databases={databases} colors={colors} userData={userData} />

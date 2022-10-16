@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Position, Pane, Menu as MenuE, Button as ButtonE, toaster, Table as TableE, SideSheet, Popover, Dialog, TextInputField, Spinner } from 'evergreen-ui';
+import { Pane, Button as ButtonE, toaster, Table as TableE, Popover, Dialog, TextInputField, Spinner } from 'evergreen-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { List, ListItem, ListItemText, Divider, Typography, Grid, TextField, IconButton, Paper, Stepper, StepLabel, Step, Menu as MenuM, ButtonGroup, Button as ButtonM } from "@material-ui/core";
-import { faCube, faChevronCircleDown, faChevronCircleRight, faCopy, faCubes, faDatabase, faExclamationCircle, faInfoCircle, faKey, faLayerGroup, faLock, faSpinner, faUserAstronaut, faChevronRight, faProjectDiagram, faTimesCircle, faTable, faLightbulb, faStream, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import PageviewIcon from '@material-ui/icons/Pageview';
+import { List, ListItem, ListItemText, Divider, Typography, Grid, TextField, IconButton, Paper, Stepper, StepLabel, Step, ButtonGroup, Button as ButtonM } from "@material-ui/core";
+import { faCube, faCubes, faInfoCircle, faKey, faLayerGroup, faChevronRight, faTable, faLightbulb, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import AddToPhotosRoundedIcon from '@material-ui/icons/AddToPhotos';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IndeterminateCheckIcon from '@material-ui/icons/IndeterminateCheckBox';
@@ -14,13 +13,13 @@ import datamiss from '../assets/Spreadsheets-pana.svg';
 
 function DockSmallScreen(props) {
 
-    const config = require("../wdb.json")
+    const config = require("../assets/wdb.secrets.json")
 
-    const WDB_URL = config.REACT_APP_WDB_URL
+    const WDB_URL = config.WDB_URL
 
     var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
-    const [process, setProcess] = useState('Ready');
+    const [wdbProcess, setProcess] = useState('Ready');
 
     const [database, setDatabase] = useState();
     const [collections, setCollection] = useState();
@@ -103,9 +102,9 @@ function DockSmallScreen(props) {
             if (json.status_code === '0') {
                 setError(json.response)
             } else {
-                var processedData = json.data;
+                var wdbProcessedData = json.data;
                 var dataSchema = json.schema;
-                setData({ data: processedData, schema: dataSchema });
+                setData({ data: wdbProcessedData, schema: dataSchema });
                 setError();
                 setProcess('Fetched');
             };

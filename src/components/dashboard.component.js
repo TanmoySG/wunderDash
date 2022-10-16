@@ -4,19 +4,18 @@ import colils from '../assets/Logistics-bro.svg';
 import { Avatar, Position, Menu as MenuE, Popover, Button as ButtonE, SelectMenu } from 'evergreen-ui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TreeView, TreeItem } from '@material-ui/lab';
-import { AppBar, Toolbar, FormControl, Input, Typography, Grid, Accordion, AccordionSummary, Chip, MenuItem, AccordionDetails, Menu as MenuM, Button as ButtonM } from "@material-ui/core";
+import { AppBar, Toolbar, FormControl, Input, Typography, Grid, Accordion, AccordionSummary, AccordionDetails } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { faCube, faChevronCircleDown, faChevronCircleRight, faCopy, faCubes, faDatabase, faExclamationCircle, faInfoCircle, faKey, faLayerGroup, faLock, faSpinner, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
-import { MenuBookSharp } from '@material-ui/icons';
+import { faCube, faChevronCircleDown, faCopy, faCubes, faDatabase } from '@fortawesome/free-solid-svg-icons';
 import Console from './console.component';
 
 
 function Dashboard(props) {
 
-    const config = require("../wdb.json")
+    const config = require("../assets/wdb.secrets.json")
 
-    const WDB_URL = config.REACT_APP_WDB_URL
+    const WDB_URL = config.WDB_URL
 
     var endpoint = WDB_URL +"/connect?cluster=" + sessionStorage.getItem("cluster_id") + "&token=" + sessionStorage.getItem("access_token");
 
@@ -29,7 +28,7 @@ function Dashboard(props) {
 
     const colors = props.colors;
 
-    const [process, setProcess] = useState('Ready');
+    const [wdbProcess, setwdbProcess] = useState('Ready');
 
     const [databases, setDatabases] = useState();
     const [selectedDB, setSelectedDB] = React.useState(null)
@@ -58,7 +57,7 @@ function Dashboard(props) {
 
 
     const fetchDatabases = () => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -83,13 +82,13 @@ function Dashboard(props) {
                 }, {});
                 setDatabases(database);
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
             };
         })
     }
 
     const fetchCollections = (e) => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -116,14 +115,14 @@ function Dashboard(props) {
                 }, {});
                 setCollection(collection);
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
             };
         })
     }
 
     /*
     const fetchData = (e) => {
-        setProcess('Fetching');
+        setwdbProcess('Fetching');
         fetch(endpoint, {
             method: "POST",
             cache: "no-cache",
@@ -144,18 +143,18 @@ function Dashboard(props) {
                 setError(json.response)
             } else {
                 console.log(json);
-                var processedData = json.data;
+                var wdbProcessedData = json.data;
                 var dataSchema = json.schema;
-                setData({ data: processedData, schema: dataSchema });
+                setData({ data: wdbProcessedData, schema: dataSchema });
                 setError();
-                setProcess('Fetched');
+                setwdbProcess('Fetched');
             };
         })
     }
 */
 
     useEffect(() => {
-        setProcess('Ready');
+        setwdbProcess('Ready');
         fetchDatabases();
         /*
         return () => {

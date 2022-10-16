@@ -12,11 +12,9 @@ import Dashboard from './components/dash.component';
 
 function App() {
 
-	const config = require("./wdb.json")
+	const config = require("./assets/wdb.secrets.json")
 
-	const WDB_URL = config.REACT_APP_WDB_URL
-
-	console.log(WDB_URL)
+	const WDB_URL = config.WDB_URL
 
 	var endpoint = `${WDB_URL}/login`;
 
