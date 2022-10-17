@@ -7,9 +7,6 @@ RUN npm install --production --silent && mv node_modules ../
 RUN npm install --global serve  
 COPY . .
 RUN chown -R node /usr/src/app
-ARG WDB_URL
-ENV WDB_URL=$WDB_URL
-RUN sh /usr/src/app/scripts/start-up.sh /usr/src/app
 EXPOSE 3000
 USER node
-ENTRYPOINT [ "serve", "build" ]
+ENTRYPOINT [ "sh", "/usr/src/app/scripts/start-up.sh", "/usr/src/app" ]

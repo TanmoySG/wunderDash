@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 secrets/*
-src/assets/wdb.secrets.json
+# src/assets/wdb.secrets.json

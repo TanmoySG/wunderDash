@@ -3,10 +3,8 @@ version: '3.4'
 services:
   wdash:
     image: ghcr.io/tanmoysg/wunderdash:latest
-    build:
-      args: 
-        WDB_URL: "http://wdb.tanmoysg.com"
     environment:
       NODE_ENV: production
+      WDB_URL: http://localhost:5002
     ports:
       - 3000:3000

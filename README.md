@@ -12,22 +12,19 @@ To run the Client, locally, on your device, we recommend using the [Docker Image
 
 Start the WunderDB server locally or use an hosted instance like [wdb.tanmoysg.com](https://wdb.tanmoysg.com/index.html). To run WDB Locally refer to it's [official documentation](https://github.com/TanmoySG/wunderDB#readme).
 
-Once WDB is up and running, get the URL and replace it in the [Docker Compose](docker-compose.yml) File `build-args` as
+Once WDB is up and running, get the URL and replace it in the [Docker Compose](docker-compose.yml) File `environment` as
 ```yml
-build:
-    args: 
+environment: 
     WDB_URL: "<WDB URL>"
 ```
-
 Then run the docker-compose command to start the container.
 ```
 docker-compose build
 docker-compose up
 ```
+It builds the React App while starting up and serve the built code using `serve`. Now you can use the wunderDash to interact with your data and clusters.
 
-Now you can use the wunderDash to interact with your data and clusters.
-
-**Please Note**, that when you need to update/change the WDB URL, you'll need to update the docker-compose file everytime and build it on every change of WDB URL for the updated URL to be used in the App.
+**Please Note**, that when you need to update/change the WDB URL, you'll need to update the docker-compose environment everytime. While starting up it builds the app with the new URL, so the Built React App may take some time to start, even though the container starts running.
 
 ### Alternative
 
