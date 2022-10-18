@@ -54,7 +54,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "get-collection",
@@ -87,7 +87,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "get-data",
@@ -174,7 +174,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "create-collection",
@@ -207,7 +207,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "update-data",
@@ -242,7 +242,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "add-data",
@@ -274,7 +274,7 @@ function DockSmallScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "delete-data",

@@ -61,7 +61,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "get-collection",
@@ -94,7 +94,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "get-data",
@@ -208,7 +208,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "create-collection",
@@ -243,7 +243,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "update-data",
@@ -280,7 +280,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "add-data",
@@ -314,7 +314,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "delete-data",
@@ -350,7 +350,7 @@ function DockLargeScreen(props) {
                 method: "POST",
                 cache: "no-cache",
                 headers: {
-                    "content_type": "application/json",
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     "action": "delete-collection",
@@ -384,7 +384,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "clone-collection",
@@ -421,7 +421,7 @@ function DockLargeScreen(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "migrate-collection",

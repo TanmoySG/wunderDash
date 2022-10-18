@@ -59,7 +59,7 @@ function Dashboard(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "get-database",
@@ -114,7 +114,7 @@ function Dashboard(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "create-database",
@@ -143,7 +143,7 @@ function Dashboard(props) {
             method: "POST",
             cache: "no-cache",
             headers: {
-                "content_type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "action": "delete-database",
